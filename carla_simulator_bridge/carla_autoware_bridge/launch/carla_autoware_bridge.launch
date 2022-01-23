@@ -6,7 +6,7 @@
   <arg name='role_name' default='ego_vehicle'/>
   <arg name='spawn_point' default=''/>
   <arg name='use_manual_control' default='false'/>
-  <arg name='sensor_definition_file'/>
+  <arg name='object_definition_file'/>
 
   <!-- carla autoware bridge -->
   <include file='$(find carla_ros_bridge)/launch/carla_ros_bridge.launch'>
@@ -16,13 +16,11 @@
   </include>
 
   <!-- carla autoware ego vehicle -->
-  <include file='$(find carla_ego_vehicle)/launch/carla_ego_vehicle.launch' >
-    <arg name='host' value='$(arg host)'/>
-    <arg name='port' value='$(arg port)'/>
-    <arg name='vehicle_filter' value='$(arg vehicle_filter)'/>
+  <include file="$(find carla_spawn_objects)/launch/carla_example_ego_vehicle.launch">
+    <arg name="objects_definition_file" value='$(arg object_definition_file)'/>
     <arg name='role_name' value='$(arg role_name)'/>
-    <arg name='spawn_point' value='$(arg spawn_point)'/>
-    <arg name='sensor_definition_file' value='$(arg sensor_definition_file)'/>
+    <arg name="spawn_point_ego_vehicle" value="$(arg spawn_point)"/>
+    <arg name="spawn_sensors_only" value="false"/>
   </include>
 
   <group if='$(arg use_manual_control)'>
